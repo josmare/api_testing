@@ -1,11 +1,13 @@
 # API testing with python
 import os
 import pytest
+import numpy
 import datetime
 import requests
 
 HEADER = {'x-api-key': os.getenv('API_KEY')}
 URL = 'https://l9njuzrhf3.execute-api.eu-west-1.amazonaws.com/prod'
+MAX_ID = 999
 
 
 @pytest.fixture
@@ -51,3 +53,14 @@ def test_createdby_is_int_in_existing_users(users_json):
     existing_users = [int(u) for u in users_json]
     for user in users_json:
         assert users_json[user]['created_by'] in existing_users
+
+
+def test_userid_not_exist(users_json):
+    existing_ids = [int(id) for id in users_json]
+    # Generate id not present in API
+    while True:
+        invalid_id = numpy.random.randint(MAX_ID)
+        if invalid_id not in existing_ids:
+            break
+    response = requests.get(URL + '/user/' + str(invalid_id), headers=HEADER)
+    assert response.status_code == 404
