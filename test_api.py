@@ -39,3 +39,15 @@ def test_created_format(users_json):
     correct_format = '%m-%d-%y %H:%M:%S %z'
     for user in users_json:
         assert datetime.datetime.strptime(users_json[user]['created'], correct_format)
+
+
+def test_groupid_is_int_in_groups(users_json, group_json):
+    existing_grups = [int(g) for g in group_json]
+    for user in users_json:
+        assert users_json[user]['group_id'] in existing_grups
+
+
+def test_createdby_is_int_in_existing_users(users_json):
+    existing_users = [int(u) for u in users_json]
+    for user in users_json:
+        assert users_json[user]['created_by'] in existing_users
