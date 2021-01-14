@@ -1,7 +1,9 @@
 # API testing with python
 import os
-import pytest
 import numpy
+import string
+import pytest
+import random
 import datetime
 import requests
 
@@ -64,3 +66,9 @@ def test_userid_not_exist(users_json):
             break
     response = requests.get(URL + '/user/' + str(invalid_id), headers=HEADER)
     assert response.status_code == 404
+
+
+def test_userid_invalid():
+    invalid_id = random.choice(list(set(string.printable).difference(set(string.digits))))
+    response = requests.get(URL + '/user/' + str(invalid_id), headers=HEADER)
+    assert response.status_code == 400
