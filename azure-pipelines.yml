@@ -26,6 +26,7 @@ steps:
 
 - script: |
     pip install pytest pytest-azurepipelines
+    cd tests
     pytest
   env:
     API_KEY: $(API_KEY)
