@@ -8,11 +8,27 @@ URL = 'https://l9njuzrhf3.execute-api.eu-west-1.amazonaws.com/prod'
 
 
 @pytest.fixture
-def user_json():
+def users_json():
     return requests.get(url=URL + '/user', headers=HEADER).json()
 
 
-def test_usernames_are_strings(user_json):
-    for i in user_json:
-        assert type(user_json[i]['first_name']) is str
-        assert type(user_json[i]['last_name']) is str
+@pytest.fixture()
+def group_json():
+    return requests.get(url=URL + '/group', headers=HEADER).json()
+
+
+def test_usernames_are_strings(users_json):
+    for user in users_json:
+        assert type(users_json[user]['first_name']) is str
+        assert type(users_json[user]['last_name']) is str
+
+
+def test_email_is_string(users_json):
+    for user in users_json:
+        assert type(users_json[user]['email']) is str
+
+
+def test_roles_is_int_list(users_json):
+    for user in users_json:
+        for role in users_json[user]['roles']:
+            assert type(role) is int
