@@ -16,4 +16,3 @@ def test_usernames_are_strings(user_json):
     for i in user_json:
         assert type(user_json[i]['first_name']) is str
         assert type(user_json[i]['last_name']) is str
-        assert type(user_json[i]['last_name']) is str
