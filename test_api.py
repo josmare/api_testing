@@ -1,7 +1,8 @@
 # API testing with python
-import requests
 import os
 import pytest
+import datetime
+import requests
 
 HEADER = {'x-api-key': os.getenv('API_KEY')}
 URL = 'https://l9njuzrhf3.execute-api.eu-west-1.amazonaws.com/prod'
@@ -32,3 +33,9 @@ def test_roles_is_int_list(users_json):
     for user in users_json:
         for role in users_json[user]['roles']:
             assert type(role) is int
+
+
+def test_created_format(users_json):
+    correct_format = '%m-%d-%y %H:%M:%S %z'
+    for user in users_json:
+        assert datetime.datetime.strptime(users_json[user]['created'], correct_format)
