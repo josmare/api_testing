@@ -33,7 +33,7 @@ def test_groupparenid_is_valid(group_json):
 
 def test_groupid_not_exist(group_json):
     existing_groups_ids = [int(g) for g in group_json]
-    # Generate a valid id group not present in API
+    # Generate a invalid id group not present in API
     while True:
         invalid_group_id = numpy.random.randint(MAX_ID)
         if invalid_group_id not in existing_groups_ids:
@@ -49,8 +49,8 @@ def test_groupid_is_invalid(group_json):
     assert response.status_code == 400
 
 
+# TODO: Refactor this function.
 def test_group_fields(group_json):
-    # TODO: Refactor this function.
     existing_group_ids = [int(g_id) for g_id in group_json]
     # Choose random id from the existing ones
     testing_id = random.choice(existing_group_ids)

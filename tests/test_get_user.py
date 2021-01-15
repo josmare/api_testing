@@ -56,11 +56,11 @@ def test_userid_invalid():
     # Generate a invalid id character
     invalid_id = random.choice(list(set(string.printable).difference(set(string.digits))))
     response = requests.get(URL + '/user/' + str(invalid_id), headers=HEADER)
+    print(invalid_id)
     assert response.status_code == 400
 
-    # TODO: Refactor following test into several fixtures that can be reused by other tests
 
-
+# TODO: Refactor following test into several fixtures that can be reused by other tests
 def test_user_fields(users_json, group_json):
     existing_ids = [int(id) for id in users_json]
     existing_groups = [int(g) for g in group_json]
