@@ -50,6 +50,7 @@ def test_groupid_is_invalid(group_json):
 
 
 def test_group_fields(group_json):
+    # TODO: Refactor this function.
     existing_group_ids = [int(g_id) for g_id in group_json]
     # Choose random id from the existing ones
     testing_id = random.choice(existing_group_ids)
