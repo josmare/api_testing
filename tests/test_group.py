@@ -17,3 +17,12 @@ def test_groupcreatedby_is_int_in_existing_groups(group_json):
     existing_groups = [int(g) for g in group_json]
     for group in group_json:
         assert group_json[group]['created_by'] in existing_groups
+
+
+def test_groupparenid_is_valid(group_json):
+    existing_groups = [int(g) for g in group_json]
+    for group in group_json:
+        if group_json[group]['parent_id'] is not None:
+            assert group_json[group]['parent_id'] in existing_groups
+        else:
+            assert group_json[group]['name'] == 'Root Group'
