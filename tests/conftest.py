@@ -41,9 +41,10 @@ def post_request(r_url, json):
     return requests.post(url=URL + r_url, headers=HEADER, json=json)
 
 
-def random_invalid_name():
-    """Generates a random string out of boundaries 2-50 characters"""
-    name_length = numpy.random.randint(MAX_LENGTH, 599)
+# TODO: Refactor to test invalid sizes from 0-2 or 0-3 for group names
+def random_invalid_name(upper_limit):
+    """Generates a random string ñarget than 50 characters"""
+    name_length = numpy.random.randint(upper_limit, 599)
     letters = string.ascii_letters + string.digits
     return ''.join(random.choice(letters) for i in range(name_length))
 
@@ -67,7 +68,7 @@ valid_user_post = {
 }
 
 invalid_user_firstname = {
-    'first_name': random_invalid_name(),
+    'first_name': random_invalid_name(50),
     'last_name': 'Testinen',
     'email': 'testi.testinen@example.com',
     'roles': [0],
@@ -76,7 +77,7 @@ invalid_user_firstname = {
 
 invalid_user_lastname = {
     'first_name': 'Testi',
-    'last_name': random_invalid_name(),
+    'last_name': random_invalid_name(50),
     'email': 'testi.testinen@example.com',
     'roles': [0],
     'group_id': 1
@@ -85,11 +86,10 @@ invalid_user_lastname = {
 invalid_user_email = {
     'first_name': 'Testi',
     'last_name': 'Testinen',
-    'email': random_invalid_name(),
+    'email': random_invalid_name(50),
     'roles': [0],
     'group_id': 1
 }
-
 
 invalid_user_roles = {
     'first_name': 'Testi',
@@ -97,4 +97,22 @@ invalid_user_roles = {
     'email': 'testi.testinen@example.com',
     'roles': random_invalid_list(),
     'group_id': 1
+}
+
+valid_group_post = {
+    'name': 'Test Co.',
+    'parent_id': 0,
+    'created': '01-11-21 15:55:37 +0000'
+}
+
+invalid_group_name = {
+    'name': random_invalid_name(30),
+    'parent_id': 0,
+    'created': '01-11-21 15:55:37 +0000'
+}
+
+valid_group_post = {
+    'name': 'Test Co.',
+    'parent_id': 0,
+    'created': '01-11-21 15:55:37 +0000'
 }

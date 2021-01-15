@@ -1,10 +1,11 @@
 import datetime
 import numpy
-from tests.conftest import DATE_FORMAT, MAX_ID, \
-    post_request, valid_user_post, invalid_user_firstname, invalid_user_lastname, invalid_user_email, \
-    invalid_user_roles
+from tests.conftest import DATE_FORMAT, MAX_ID, post_request,\
+    valid_user_post, invalid_user_firstname, invalid_user_lastname,\
+    invalid_user_email, invalid_user_roles
 
-def test_post_valid_user(random_names):
+
+def test_post_valid_user():
     p_response = post_request('/user', valid_user_post)
     response_json = p_response.json()
     assert p_response.status_code == 200
