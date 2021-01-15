@@ -47,3 +47,17 @@ def test_groupid_is_invalid(group_json):
     invalid_id = random.choice(list(set(string.printable).difference(set(string.digits))))
     response = requests.get(URL + '/group/' + str(invalid_id), headers=HEADER)
     assert response.status_code == 400
+
+
+def test_group_fields(group_json):
+    existing_group_ids = [int(g_id) for g_id in group_json]
+    # Choose random id from the existing ones
+    testing_id = random.choice(existing_group_ids)
+    json_response = requests.get(URL + '/group/' + str(testing_id), headers=HEADER).json()
+    assert type(json_response['name']) is str
+    assert datetime.datetime.strptime(json_response['created'], DATE_FORMAT)
+    assert json_response['created_by'] in existing_group_ids
+    if json_response['parent_id'] is not None:
+        assert json_response['parent_id'] in existing_group_ids
+    else:
+        assert json_response['name'] == 'Root Group'

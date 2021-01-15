@@ -63,6 +63,7 @@ def test_userid_invalid():
 
 def test_user_fields(users_json, group_json):
     existing_ids = [int(id) for id in users_json]
+    existing_groups = [int(g) for g in group_json]
     # Choose random id from the existing ones
     testing_id = random.choice(existing_ids)
     json_response = requests.get(URL + '/user/' + str(testing_id), headers=HEADER).json()
@@ -71,8 +72,7 @@ def test_user_fields(users_json, group_json):
     assert type(json_response['email']) is str
     for role in json_response['roles']:
         assert type(role) is int
-    assert json_response['created'], DATE_FORMAT
-    existing_groups = [int(g) for g in group_json]
+    assert datetime.datetime.strptime(json_response['created'], DATE_FORMAT)
     assert json_response['group_id'] in existing_groups
     assert json_response['created_by'] in existing_ids
 
